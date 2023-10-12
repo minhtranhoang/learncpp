@@ -9,21 +9,23 @@ Integer::Integer()
 
 Integer::Integer(int value)
 {
-    std::cout << "Integer(int)" << std::endl;
+    std::cout << "Integer(" << value <<":int)" << std::endl;
+
     m_pInt = new int{ value };
 }
 
 // Copy contructure
 Integer::Integer(const Integer& obj)
 {
-    std::cout << "Integer(const Integer& obj)" << std::endl;
+    std::cout << "Integer(" << *obj.m_pInt << ":const Integer& obj)" << std::endl;
+
     m_pInt = new int{ *obj.m_pInt };
 }
 
 // Move contructor
 Integer::Integer(Integer&& obj)
 {
-    std::cout << "Integer(Integer&& obj)" << std::endl;
+    std::cout << "Integer(" << *obj.m_pInt << ": Integer&& obj)" << std::endl;
 
     m_pInt = new int{ *obj.m_pInt };
     obj.m_pInt = nullptr;
@@ -31,18 +33,19 @@ Integer::Integer(Integer&& obj)
 
 Integer Integer::operator+(const Integer& a) const
 {
+    std::cout << "In operator+ =============" << std::endl;
+
     Integer temp;
     *temp.m_pInt = *m_pInt + *a.m_pInt;
 
-    std::cout << "operator+" << std::endl;
-    std::cout << "Address of temp is: " << &temp  << std::endl;
+    std::cout << "End operator+ =============" << std::endl;
 
     return temp;
 }
 
 Integer& Integer::operator=(const Integer& a)
 {
-    std::cout << "operator=(const Integer& a)" << std::endl;
+    std::cout << "operator=(" << *a.m_pInt << ":const Integer& a)" << std::endl;
 
     if (&a == this)
     {
@@ -67,6 +70,12 @@ Integer& Integer::operator=(Integer&& a)
     a.m_pInt = nullptr;
 
     return *this;
+}
+
+Integer::operator int()
+{
+    std::cout << "operator int(): "<< *m_pInt << std::endl;
+    return *m_pInt;
 }
 
 Integer::~Integer()

@@ -2,12 +2,12 @@
 #include "Car.h"
 #include "Integer.h"
 
-void Print(int& x) {
+void Print(Integer& x) {
 	std::cout << "Print(int& x): " << x << std::endl;
 }
 
-void Print(const int& x) {
-	std::cout << "Print(const int& x): "<< x << std::endl;
+void Print(const Integer& x) {
+	std::cout << "Print(const int& x): "<< x.GetValue() << std::endl;
 }
 
 Integer temp(Integer &a)
@@ -16,14 +16,48 @@ Integer temp(Integer &a)
 	return temp;
 }
 
+Integer Add(int x, int y)
+{
+	Integer result{ x + y };
+	return result;
+}
+
+class Product {
+	private :
+		Integer m_Id;
+		int x;
+public:
+	Product(const Integer& a) : m_Id(a), x{a.GetValue()} {
+		std::cout << "Product()" << std::endl;
+	}
+
+	~Product() {
+		std::cout << "~Product()" << std::endl;
+	}
+};
+
+const char *Combine(const char* str1, const char* str2)
+{
+	char* p = new char[strlen(str1) + strlen(str2) + 1];
+
+	strcpy(p, str1);
+	strcat(p, str2);
+
+	return p;
+}
+
 int main()
 {
-	Integer c1{ 5 }, c2{ 10 };
-	Integer result = temp(c1);
+	char first_name[10];
+	char last_name[10];
 
-	result = c1 + 100;
+	std::cin.getline(first_name, 10);
+	std::cin.getline(last_name, 10);
 
-	std::cout << "Address of result is: " << &result << std::endl;
+	const char * fullname = Combine(first_name, last_name);
+	std::cout << "Full name is: " << fullname;
+
+	delete[] fullname;
 
 	return 0;
 }
